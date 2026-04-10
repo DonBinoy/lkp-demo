@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { Star, MapPin, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface ExperienceCardProps {
+  id: number;
   title: string;
   location: string;
   price: string;
@@ -12,6 +14,7 @@ interface ExperienceCardProps {
 }
 
 export default function ExperienceCard({ 
+  id,
   title, 
   location, 
   price, 
@@ -21,10 +24,11 @@ export default function ExperienceCard({
   category 
 }: ExperienceCardProps) {
   return (
-    <motion.div 
-      whileHover={{ y: -10 }}
-      className="group cursor-pointer"
-    >
+    <Link to={`/experience/${id}`}>
+      <motion.div 
+        whileHover={{ y: -10 }}
+        className="group cursor-pointer"
+      >
       <div className="relative aspect-[3/4] rounded-3xl overflow-hidden mb-6">
         {/* Category Badge */}
         <div className="absolute top-4 left-4 z-10">
@@ -68,6 +72,7 @@ export default function ExperienceCard({
           From <span className="text-white text-lg">{price}</span> <span className="text-xs">/ person</span>
         </p>
       </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }
