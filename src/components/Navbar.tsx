@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Menu, X, User, Globe } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -25,32 +26,39 @@ export default function Navbar() {
           isScrolled ? 'shadow-2xl bg-black/40' : 'bg-white/5'
         }`}>
           {/* Logo */}
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-2 cursor-pointer"
-          >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-white to-white/40 flex items-center justify-center">
-              <span className="text-black font-display font-bold text-xs">LKP</span>
-            </div>
-            <span className="font-display font-medium text-lg tracking-tight hidden sm:block">
-              Little Known Planet
-            </span>
-          </motion.div>
+          <Link to="/">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-white to-white/40 flex items-center justify-center">
+                <span className="text-black font-display font-bold text-xs">LKP</span>
+              </div>
+              <span className="font-display font-medium text-lg tracking-tight hidden sm:block">
+                Little Known Planet
+              </span>
+            </motion.div>
+          </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {['Experiences', 'Adventures', 'Stays', 'About'].map((item, idx) => (
+          <div className="hidden md:flex items-center gap-10">
+            {[
+              { label: 'Experiences', path: '/#experiences' },
+              { label: 'Adventures', path: '/#categories' },
+              { label: 'Stays', path: '/#categories' },
+              { label: 'About', path: '/#philosophy' }
+            ].map((item, idx) => (
               <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+                key={item.label}
+                href={item.path}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors relative group"
+                className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/50 hover:text-white transition-all relative group"
               >
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full" />
+                {item.label}
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-1 rounded-full bg-white transition-all duration-500 group-hover:w-1 group-hover:h-1" />
               </motion.a>
             ))}
           </div>
