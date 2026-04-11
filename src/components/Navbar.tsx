@@ -45,9 +45,10 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-10">
             {[
               { label: 'Experiences', path: '/#experiences' },
-              { label: 'Adventures', path: '/#categories' },
-              { label: 'Stays', path: '/#categories' },
-              { label: 'About', path: '/#philosophy' }
+              { label: 'Events', path: '/#events' },
+              { label: 'Food', path: '/#food' },
+              { label: 'Stays', path: '/#stays' },
+              { label: 'Places', path: '/#places' }
             ].map((item, idx) => (
               <motion.a
                 key={item.label}

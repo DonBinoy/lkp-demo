@@ -1,147 +1,123 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Play, ArrowRight } from 'lucide-react';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { Search, Calendar, Users, ChevronRight, Play } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Hero() {
-  const containerRef = useRef(null);
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 200]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const scale = useTransform(scrollY, [0, 500], [1, 1.1]);
+  const [activeCategory, setActiveCategory] = useState('Experiences');
+
+  const categories = ['Experiences', 'Events', 'Food', 'Stays', 'Places'];
 
   return (
-    <section ref={containerRef} className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with Parallax */}
-      <motion.div 
-        style={{ y, scale }}
-        className="absolute inset-0 z-0"
-      >
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
         <img 
           src="/assets/lkp_hero_cinematic.png" 
           alt="LKP Hero" 
-          className="w-full h-full object-cover brightness-[0.5] scale-105"
+          className="w-full h-full object-cover brightness-[0.4] scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-background" />
-      </motion.div>
+      </div>
 
       {/* Content */}
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
+      <div className="container mx-auto px-6 relative z-10 pt-20">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-center text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="mb-12"
           >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex items-center gap-3 mb-8 px-4 py-2 rounded-full glass border-white/10"
-            >
-              <div className="w-2 h-2 rounded-full bg-stay animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/60">
-                Pioneering the Unseen since 2012
-              </span>
-            </motion.div>
+            <h1 className="text-6xl md:text-[100px] font-serif italic leading-[0.85] text-white/90 mb-8">
+              Discover <br />
+              <span className="font-sans not-italic font-medium text-white tracking-tighter">Your Next Plan.</span>
+            </h1>
+            <p className="text-xl text-white/40 font-light max-w-xl mx-auto">
+              The world's most curated catalog of unique experiences, stays, and hidden gatherings.
+            </p>
+          </motion.div>
 
-            <div className="relative mb-12">
-              <motion.h1
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="text-7xl md:text-[140px] font-serif italic leading-[0.85] text-white/90"
-              >
-                Reconnect <br />
-                <span className="font-sans not-italic font-medium text-white tracking-tighter">with Silence.</span>
-              </motion.h1>
-              
-              {/* Decorative Floating Element */}
-              <motion.div
-                animate={{ 
-                  y: [0, -20, 0],
-                  rotate: [0, 5, 0]
-                }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-12 -right-12 hidden md:block"
-              >
-                <div className="w-32 h-32 rounded-full glass border-white/5 flex items-center justify-center p-4">
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-center leading-tight text-white/40">
-                    Est. <br /> Collective
+          {/* Functional Discovery Bar */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="glass rounded-[40px] p-2 md:p-4 mb-8 premium-shadow border-white/5 max-w-5xl mx-auto"
+          >
+            <div className="flex flex-col md:flex-row items-center gap-2">
+              {/* Category Picker */}
+              <div className="flex-1 w-full relative">
+                <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-2 px-4 whitespace-nowrap">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                      className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
+                        activeCategory === cat 
+                        ? 'bg-white text-black' 
+                        : 'text-white/40 hover:text-white hover:bg-white/5'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="hidden md:block w-px h-10 bg-white/10" />
+
+              {/* Date & Guest Inputs (Visual/Functional Mock) */}
+              <div className="flex-[2] w-full flex flex-col md:flex-row">
+                <div className="flex-1 px-6 py-4 flex items-center gap-4 text-left border-b md:border-b-0 md:border-r border-white/5">
+                  <Calendar size={18} className="text-white/30" />
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white/20">When</p>
+                    <p className="text-sm font-medium">Select Dates</p>
                   </div>
                 </div>
-              </motion.div>
+                <div className="flex-1 px-6 py-4 flex items-center gap-4 text-left">
+                  <Users size={18} className="text-white/30" />
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white/20">Who</p>
+                    <p className="text-sm font-medium">Add Guests</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Search Button */}
+              <button className="w-full md:w-16 h-16 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform shrink-0">
+                <Search size={24} />
+              </button>
             </div>
+          </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.6 }}
-              className="text-xl md:text-2xl text-white/40 max-w-2xl font-light leading-relaxed mb-16"
-            >
-              A global collective of curators dedicated to mapping the world's most 
-              isolated, profound, and transformative encounters.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.8 }}
-              className="flex flex-col sm:flex-row items-center gap-8"
-            >
-              <button className="group relative px-12 py-5 bg-white text-black rounded-full font-display font-bold text-lg overflow-hidden transition-all hover:scale-105 active:scale-95 leading-none">
-                <span className="relative z-10 flex items-center gap-3">
-                  Begin Journey <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-tr from-white to-gray-200" />
+          {/* Quick Links / Trending */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-wrap items-center justify-center gap-8"
+          >
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/20">Trending Now:</span>
+            {['Lunar Ritual', 'Sahara Stays', 'Alpine Food'].map((term) => (
+              <button key={term} className="text-xs font-medium text-white/40 hover:text-white transition-colors flex items-center gap-1 group">
+                {term} <ChevronRight size={12} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              
-              <button className="flex items-center gap-4 text-white/60 hover:text-white transition-colors group">
-                <div className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white/5 transition-all">
-                  <Play size={18} fill="currentColor" />
-                </div>
-                <div className="text-left">
-                  <p className="text-[10px] font-bold uppercase tracking-widest opacity-40">Watch Editorial</p>
-                  <p className="font-medium">The 2026 Collection</p>
-                </div>
-              </button>
-            </motion.div>
+            ))}
+            <div className="h-4 w-px bg-white/10" />
+            <button className="flex items-center gap-2 text-white/60 hover:text-white transition-colors group">
+              <Play size={14} fill="currentColor" />
+              <span className="text-xs font-bold uppercase tracking-widest">View Reel</span>
+            </button>
           </motion.div>
         </div>
       </div>
 
-      {/* Floating Meta Info */}
-      <motion.div
-        style={{ opacity }}
-        className="absolute bottom-12 left-12 hidden lg:flex items-center gap-6"
-      >
-        <div className="flex -space-x-3">
-          {[1,2,3].map(i => (
-            <div key={i} className="w-10 h-10 rounded-full border-2 border-background bg-muted overflow-hidden">
-               <div className="w-full h-full bg-white/10" />
-            </div>
-          ))}
-        </div>
-        <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">
-          9.4k Explorers <br /> Active Currently
-        </div>
-      </motion.div>
-
-      {/* Scroll Hint */}
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-12 right-12 hidden lg:flex flex-col items-center gap-4"
-      >
-        <div className="w-10 h-16 rounded-full border border-white/10 flex justify-center p-2">
-          <motion.div 
-            animate={{ y: [0, 24, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-1 rounded-full bg-white/40" 
-          />
-        </div>
-        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/20 vertical-text">Scroll</span>
-      </motion.div>
+      {/* Floating Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-40">
+        <div className="w-px h-24 bg-gradient-to-b from-white to-transparent" />
+        <span className="text-[10px] font-black uppercase tracking-[0.4em] vertical-text">Explore Selects</span>
+      </div>
     </section>
   );
 }
