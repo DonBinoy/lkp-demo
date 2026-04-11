@@ -66,7 +66,7 @@ export default function Hero() {
 
               <div className="hidden md:block w-px h-10 bg-white/10" />
 
-              {/* Date & Guest Inputs (Visual/Functional Mock) */}
+          
               <div className="flex-[2] w-full flex flex-col md:flex-row">
                 <div className="flex-1 px-6 py-4 flex items-center gap-4 text-left border-b md:border-b-0 md:border-r border-white/5">
                   <Calendar size={18} className="text-white/30" />
@@ -91,13 +91,7 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* Quick Links / Trending */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-wrap items-center justify-center gap-8"
-          >
+    
             <span className="text-[10px] font-bold uppercase tracking-widest text-white/20">Trending Now:</span>
             {['Lunar Ritual', 'Sahara Stays', 'Alpine Food'].map((term) => (
               <button key={term} className="text-xs font-medium text-white/40 hover:text-white transition-colors flex items-center gap-1 group">
@@ -113,7 +107,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Floating Scroll Indicator */}
+    
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-40">
         <div className="w-px h-24 bg-gradient-to-b from-white to-transparent" />
         <span className="text-[10px] font-black uppercase tracking-[0.4em] vertical-text">Explore Selects</span>
