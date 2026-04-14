@@ -1,120 +1,108 @@
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Search, ChevronRight } from 'lucide-react';
-import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  
+  // Animation Variants for structural staggered drops
+  const container: any = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, delayChildren: 0.5 }
+    }
+  };
 
-  const springConfig = { damping: 25, stiffness: 150 };
-  const smoothX = useSpring(mouseX, springConfig);
-  const smoothY = useSpring(mouseY, springConfig);
-
-  const x = useTransform(smoothX, [-0.5, 0.5], [-30, 30]);
-  const y = useTransform(smoothY, [-0.5, 0.5], [-30, 30]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const { innerWidth, innerHeight } = window;
-      mouseX.set((clientX / innerWidth) - 0.5);
-      mouseY.set((clientY / innerHeight) - 0.5);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  const item: any = {
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0, transition: { duration: 1.5, ease: [0.16, 1, 0.3, 1] } }
+  };
 
   return (
-    <section className="relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-[#050505]">
-      {/* SVG Noise Filter */}
-      <div 
-        className="absolute inset-0 z-20 pointer-events-none opacity-[0.03]" 
-        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}
-      />
-
-      {/* Abstract Background Elements instead of single image */}
+    <section className="relative min-h-screen bg-[#050505] p-4 md:p-8 flex flex-col justify-between overflow-hidden">
+      
+      {/* High-End Gallery Frame */}
       <motion.div 
-        style={{ x, y }}
-        className="absolute inset-0 z-0 flex items-center justify-center opacity-70"
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute inset-4 md:inset-8 border border-white/10 rounded-[40px] overflow-hidden z-0"
       >
-        <div className="absolute w-[800px] h-[800px] bg-stay/20 blur-[150px] rounded-full mix-blend-screen translate-x-1/2 -translate-y-1/4" />
-        <div className="absolute w-[600px] h-[600px] bg-experience/20 blur-[150px] rounded-full mix-blend-screen -translate-x-1/4 translate-y-1/3" />
+        <motion.img 
+          initial={{ scale: 1.1, filter: "grayscale(100%)" }}
+          animate={{ scale: 1, filter: "grayscale(30%)" }}
+          transition={{ duration: 15, ease: "easeOut" }}
+          src="/assets/lkp_hero_cinematic.png" 
+          className="w-full h-full object-cover" 
+        />
+        {/* Subtle, elegant gradient overlay instead of heavy black */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/30 z-10" />
       </motion.div>
 
-      {/* Main Buttermax Structure */}
-      <div className="container mx-auto px-6 relative z-10 pt-32 h-full flex flex-col justify-between">
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="container mx-auto px-6 md:px-12 relative z-20 flex flex-col h-full flex-grow justify-between pt-32 pb-12 pointer-events-none"
+      >
         
-        {/* Top Info Bar */}
-        <div className="flex justify-between items-start mb-20">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-1/3 text-xs uppercase tracking-[0.3em] font-black leading-relaxed text-white/40 border-l border-white/20 pl-6">
-            A New Era Of <br/> Intentional Travel <br/> [Est. 2026]
-          </motion.p>
-          <motion.div 
-            initial={{ scale: 0 }} animate={{ scale: 1 }} 
-            className="w-16 h-16 rounded-full border border-white/20 flex flex-col items-center justify-center relative spin-slow"
-          >
-             <span className="text-[8px] absolute top-2 uppercase tracking-widest font-black">Scroll</span>
-             <div className="w-px h-6 bg-white/50" />
-          </motion.div>
-        </div>
-
-        {/* Extreme Typography */}
-        <div className="relative z-10 -ml-4 md:-ml-12 mb-20" data-cursor="discover">
-          <h1 className="text-[12vw] leading-[0.8] tracking-tighter uppercase whitespace-nowrap overflow-visible flex flex-col">
-            
-            <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1, duration: 1, type: "spring" }} className="flex items-center gap-4">
-              <span className="font-serif italic font-light hover:text-stay transition-colors duration-700">Curate</span>
-              <span className="font-display font-black text-white mix-blend-overlay">The</span>
-            </motion.div>
-            
-            <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2, duration: 1, type: "spring" }} className="flex items-center gap-6 ml-[10vw]">
-              <span className="font-display font-black">Unseen</span>
-              
-              {/* Inline Pill Image */}
-              <motion.div 
-                whileHover={{ width: "30vw" }}
-                className="w-[15vw] h-[8vw] rounded-full overflow-hidden relative box-border transform -rotate-6 shadow-2xl transition-all duration-700 pointer-events-auto"
-              >
-                <img src="/assets/lkp_desert_experience.png" className="w-[150%] h-[150%] object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-              </motion.div>
-
-              <span className="font-serif italic font-light text-white/50">&amp;</span>
-            </motion.div>
-
-            <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3, duration: 1, type: "spring" }} className="flex items-center gap-6">
-              {/* Inline Pill Image 2 */}
-              <div className="w-[10vw] h-[10vw] rounded-full overflow-hidden relative border border-white/20 ml-[5vw]">
-                 <img src="/assets/lkp_stay_lodge.png" className="w-[150%] h-[150%] object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 grayscale hover:grayscale-0 transition-all duration-700" />
-              </div>
-              <span className="font-display font-black text-transparent [-webkit-text-stroke:2px_white] hover:[-webkit-text-stroke:4px_white] transition-all duration-500">
-                Experience
-              </span>
-            </motion.div>
-            
-          </h1>
-        </div>
-
-        {/* Bottom Search / Interaction bar */}
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
-          className="flex flex-col md:flex-row justify-between items-end border-t border-white/10 pt-10"
-        >
-          <p className="text-xl font-serif italic text-white/60 mb-8 md:mb-0 max-w-sm">
-            Leave behind the standard itineraries. Request access to our private global catalog.
-          </p>
-          
-          <div className="flex gap-4 w-full md:w-auto">
-            <div className="flex-1 md:w-64 glass rounded-full px-6 py-4 flex items-center justify-between group cursor-pointer hover:bg-white/10 transition-colors">
-               <span className="text-xs font-black uppercase tracking-widest">Search Catalog</span>
-               <Search size={16} className="group-hover:scale-125 transition-transform" />
+        {/* Top Minimalist Info Bar */}
+        <motion.div variants={item} className="flex justify-between items-start">
+          <div className="flex gap-16">
+            <div>
+              <span className="block text-[8px] font-black uppercase tracking-[0.4em] text-white/40 mb-3">Chapter</span>
+              <span className="text-sm font-serif italic text-white/80">01 / Volume II</span>
             </div>
-            <button className="px-8 py-4 bg-white text-black rounded-full font-black uppercase tracking-widest text-xs flex items-center gap-2 hover:bg-stay hover:text-white transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-               Apply <ChevronRight size={14} />
-            </button>
+          </div>
+          <div className="text-right">
+             <span className="block text-[8px] font-black uppercase tracking-[0.4em] text-white/40 mb-3">Location</span>
+             <span className="text-sm font-serif italic text-white/80">Global Archive</span>
           </div>
         </motion.div>
 
-      </div>
+        {/* Ultra-Premium Typography Lockup */}
+        <div className="flex-grow flex flex-col justify-center">
+          <motion.div variants={item} className="max-w-5xl">
+            <span className="block text-[10px] font-black uppercase tracking-[0.5em] text-white/50 mb-8 ml-2">Access The Unseen</span>
+            <h1 className="text-7xl md:text-[11vw] leading-[0.85] tracking-tighter text-white">
+              <span className="font-serif italic font-light block hover:text-stay transition-colors duration-1000 pointer-events-auto">Curated</span>
+              <span className="font-display font-black uppercase ml-12 md:ml-[10vw]">Escapes.</span>
+            </h1>
+          </motion.div>
+        </div>
+
+        {/* Hyper-Minimalist Search/Booking Interface */}
+        <motion.div 
+          variants={item}
+          className="flex flex-col md:flex-row justify-between items-end gap-12 pointer-events-auto"
+        >
+          {/* Natural Language Form */}
+          <div className="w-full md:w-auto">
+             <p className="text-2xl md:text-3xl font-serif italic text-white/50 flex flex-wrap items-center gap-y-4 gap-x-3 leading-loose">
+               <span>I wish to travel to</span>
+               <span className="relative inline-block px-2 group cursor-text">
+                 <input type="text" placeholder="anywhere" className="bg-transparent border-b border-white/20 outline-none text-white font-display not-italic font-medium w-32 md:w-48 placeholder-white/20 focus:border-white transition-colors text-center pb-1" />
+               </span>
+               <span>during</span>
+               <span className="relative inline-block px-2 group cursor-pointer">
+                 <span className="border-b border-white/20 pb-1 text-white font-display not-italic font-medium hover:border-white transition-colors">Autumn</span>
+               </span>
+               <span>for</span>
+               <span className="relative inline-block px-2 group cursor-pointer">
+                 <span className="border-b border-white/20 pb-1 text-white font-display not-italic font-medium hover:border-white transition-colors">Serenity</span>.
+               </span>
+             </p>
+          </div>
+
+          {/* Minimalist CTA */}
+          <button 
+             data-cursor="discover"
+             className="shrink-0 w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-700 bg-black/20 backdrop-blur-md"
+          >
+             <ArrowRight size={24} className="-rotate-45 hover:rotate-0 transition-transform duration-500" />
+          </button>
+        </motion.div>
+
+      </motion.div>
     </section>
   );
 }

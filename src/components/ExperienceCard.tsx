@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Star, MapPin, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Star, MapPin, Clock, ArrowRight } from 'lucide-react';
 import type { CategoryType } from '../data';
 import React from 'react';
 
@@ -27,7 +27,8 @@ export default function ExperienceCard({
   category,
   type
 }: ExperienceCardProps) {
-  
+  const navigate = useNavigate();
+
   const themeColors: Record<CategoryType, string> = {
     stay: 'group-hover:text-stay border-stay/20',
     experience: 'group-hover:text-experience border-experience/20',
@@ -72,28 +73,48 @@ export default function ExperienceCard({
     y.set(0);
   };
 
+  const navigateToDetails = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (type === 'place') {
+      navigate(`/place/${id}`);
+    } else if (type === 'stay') {
+      navigate(`/stay/${id}`);
+    } else if (type === 'event') {
+      navigate(`/event/${id}`);
+    } else if (type === 'food') {
+      navigate(`/food/${id}`);
+    } else {
+      navigate(`/experience/${id}`);
+    }
+  };
+
   return (
-    <Link to={`/experience/${id}`} className="block relative" style={{ perspective: "1000px" }}>
+    <div className="block relative" style={{ perspective: "1000px" }}>
       <motion.div 
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="group cursor-pointer text-left"
+        className="group cursor-pointer text-left h-full flex flex-col"
+        onClick={navigateToDetails}
       >
         <motion.div 
           style={{ translateZ: "20px" }}
-          className={`relative aspect-[3/4] rounded-3xl overflow-hidden mb-6 border-b-2 transition-colors duration-500 ${themeColors[type]}`}
+          className={`relative aspect-[3/4] rounded-[30px] overflow-hidden mb-6 border border-transparent transition-all duration-500 hover:border-white/20`}
         >
           {/* Subtle Hover Bloom behind image */}
           <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.03] transition-colors duration-500 z-10 mix-blend-overlay pointer-events-none" />
 
           {/* Category Badge */}
-          <div className="absolute top-4 left-4 z-20">
+          <div className="absolute top-4 left-4 z-20 flex justify-between w-[calc(100%-2rem)] items-center">
             <span className={`px-3 py-1 rounded-full backdrop-blur-md text-[9px] font-black uppercase tracking-[0.2em] shadow-lg ${badgeColors[type]}`}>
               {category}
             </span>
+            <div className="flex gap-1 items-center bg-black/40 backdrop-blur-md px-2 py-1 rounded-full">
+              <Star size={10} className="fill-white" />
+              <span className="text-[10px] font-bold text-white">{rating}</span>
+            </div>
           </div>
           
           {/* Main Image */}
@@ -104,38 +125,48 @@ export default function ExperienceCard({
           />
           
           {/* Overlay Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500 z-10" />
           
-          {/* Quick Info Overlay (Bottom) */}
-          <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-white transition-all duration-500 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 z-20">
-            <div className="flex items-center gap-1">
-              <Star size={14} className="fill-white" />
-              <span className="text-sm font-medium">{rating}</span>
+          {/* High-Converting E-Commerce Overlay (Bottom) */}
+          <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col text-white transition-all duration-500 translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 z-20">
+            <div className="flex items-center gap-2 mb-4 text-white/80">
+              <Clock size={12} />
+              <span className="text-xs font-bold uppercase tracking-widest">{duration}</span>
             </div>
-            <div className="flex items-center gap-1">
-              <Clock size={14} />
-              <span className="text-sm font-medium">{duration}</span>
-            </div>
+            
+            <button 
+              onClick={navigateToDetails}
+              className="w-full py-3 bg-white text-black rounded-full text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors shadow-xl"
+            >
+              Book Plan <ArrowRight size={14} />
+            </button>
           </div>
         </motion.div>
 
-        <motion.div style={{ translateZ: "30px" }}>
+        <motion.div style={{ translateZ: "30px" }} className="px-2 flex-grow flex flex-col">
           <div className="flex items-center gap-1 text-white/30 mb-2 group-hover:text-white/50 transition-colors">
             <MapPin size={10} />
             <span className="text-[10px] uppercase tracking-widest font-black">{location}</span>
           </div>
-          <h3 className={`text-2xl font-display font-medium mb-2 transition-all duration-500 transform group-hover:translate-x-2 ${themeColors[type]}`}>
+          
+          <h3 className={`text-2xl font-display font-medium mb-auto transition-all duration-500 transform group-hover:translate-x-2 ${themeColors[type]}`}>
             {title}
           </h3>
-          <p className="text-white/40 font-medium group-hover:text-white/70 transition-colors">
-            {price > 0 ? (
-              <>From <span className="text-white text-lg">${price.toLocaleString()}</span> <span className="text-xs">/ plan</span></>
-            ) : (
-              <span className="text-[10px] uppercase font-bold tracking-widest text-white/60 underline underline-offset-4 group-hover:text-white transition-colors">Explore Community Plan</span>
-            )}
-          </p>
+          
+          <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center w-full">
+            <p className="text-white font-medium group-hover:text-glow transition-all">
+              {price > 0 ? (
+                <>From <span className="text-xl font-display">${price.toLocaleString()}</span></>
+              ) : (
+                <span className="text-sm font-bold uppercase tracking-widest">Community</span>
+              )}
+            </p>
+            <span className="text-[10px] uppercase tracking-widest font-bold text-white/40 group-hover:text-white/80 transition-colors">
+               Details
+            </span>
+          </div>
         </motion.div>
       </motion.div>
-    </Link>
+    </div>
   );
 }

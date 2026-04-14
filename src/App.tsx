@@ -4,6 +4,10 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import ExperienceDetail from './pages/ExperienceDetail'
+import PlaceDetail from './pages/PlaceDetail'
+import StayDetailView from './pages/StayDetailView'
+import FoodDetailView from './pages/FoodDetailView'
+import EventDetailView from './pages/EventDetailView'
 import Cursor from './components/Cursor'
 import { useEffect } from 'react'
 
@@ -24,6 +28,10 @@ function App() {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/experience/:id" element={<ExperienceDetail />} />
+          <Route path="/place/:id" element={<PlaceDetail />} />
+          <Route path="/stay/:id" element={<StayDetailView />} />
+          <Route path="/food/:id" element={<FoodDetailView />} />
+          <Route path="/event/:id" element={<EventDetailView />} />
         </Routes>
       </AnimatePresence>
 
