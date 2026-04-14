@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import ExperienceDetail from './pages/ExperienceDetail'
+import Cursor from './components/Cursor'
 import { useEffect } from 'react'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-white selection:text-black">
+      <Cursor />
       <Navbar />
       
       <AnimatePresence mode="wait">

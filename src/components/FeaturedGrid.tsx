@@ -27,6 +27,7 @@ export default function FeaturedGrid() {
             <motion.span 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
               className="text-white/40 uppercase tracking-[0.4em] text-[10px] font-black block mb-4"
             >
               Curated Portfolio
@@ -34,43 +35,72 @@ export default function FeaturedGrid() {
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ type: "spring", stiffness: 100, damping: 20 }}
               className="text-5xl md:text-7xl font-serif italic mb-6 leading-none"
             >
               The <span className="font-sans not-italic font-medium text-white">Top Picks.</span>
             </motion.h2>
-            <p className="text-white/40 font-light">Hand-picked by our lead curators for this lunar cycle.</p>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-white/40 font-light"
+            >
+              Hand-picked by our lead curators for this lunar cycle.
+            </motion.p>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-wrap gap-2"
+          >
             {categories.map((cat) => (
-              <button 
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 key={cat.id}
                 onClick={() => setFilter(cat.id)}
-                className={`px-6 py-2 rounded-full border transition-all text-[10px] uppercase font-bold tracking-widest ${
+                className={`relative px-6 py-2 rounded-full border transition-colors text-[10px] uppercase font-bold tracking-widest ${
                   filter === cat.id 
-                  ? 'border-white bg-white text-black' 
-                  : 'border-white/5 text-white/40 hover:text-white hover:border-white/20'
+                  ? 'border-transparent text-black' 
+                  : 'border-white/5 text-white/40 hover:text-white'
                 }`}
               >
-                {cat.label}
-              </button>
+                {filter === cat.id && (
+                  <motion.div
+                    layoutId="activeFilter"
+                    className="absolute inset-0 bg-white rounded-full -z-10"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{cat.label}</span>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         <motion.div 
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 min-h-[500px]"
         >
           <AnimatePresence mode="popLayout">
             {filteredItems.map((exp, idx) => (
               <motion.div
                 key={exp.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
+                initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: -50, filter: "blur(10px)" }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 260, 
+                  damping: 20,
+                  delay: idx * 0.05 
+                }}
               >
                 <ExperienceCard {...exp} />
               </motion.div>
@@ -79,9 +109,13 @@ export default function FeaturedGrid() {
         </motion.div>
 
         {filteredItems.length === 0 && (
-          <div className="py-20 text-center">
+           <motion.div 
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             className="py-20 text-center"
+           >
              <p className="text-white/20 font-display italic text-2xl">No items found in this category yet.</p>
-          </div>
+           </motion.div>
         )}
       </div>
     </section>
