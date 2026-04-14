@@ -452,42 +452,46 @@ export default function EventDetail() {
                   <motion.button
                     layoutId="reserve-widget"
                     onClick={() => setIsBooked(true)}
-                    whileHover={{ x: -6, scale: 1.03 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ x: -8, scale: 1.02 }}
+                    whileTap={{ scale: 0.96 }}
                     transition={{ layout: { type: 'spring', stiffness: 280, damping: 28 } }}
                     className="
-                      flex items-center gap-5
-                      pl-7 pr-6 py-5
-                      bg-white/20 backdrop-blur-2xl
-                      border-l-2 border-t-2 border-b-2 border-white/40
-                      rounded-l-[28px]
-                      hover:bg-white hover:text-black hover:border-white
-                      text-white transition-colors duration-300
-                      shadow-[-30px_0_80px_rgba(255,255,255,0.15),0_8px_40px_rgba(0,0,0,0.6)]
-                      hover:shadow-[-30px_0_100px_rgba(255,255,255,0.3)]
+                      flex items-center gap-6
+                      pl-8 pr-7 py-6
+                      bg-black/70 backdrop-blur-2xl
+                      border-l-2 border-t-2 border-b-2 border-white/25
+                      rounded-l-[32px]
+                      hover:bg-black/85 hover:border-white/50
+                      text-white transition-all duration-300
+                      shadow-[-40px_0_100px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]
+                      hover:shadow-[-40px_0_120px_rgba(0,0,0,0.6),0_0_60px_rgba(255,255,255,0.08)]
                       group
                     "
                   >
-                    {/* Icon */}
-                    <div className="w-11 h-11 rounded-full border border-white/20 bg-white/10 flex items-center justify-center group-hover:bg-black/10 group-hover:border-black/20 transition-all shrink-0">
-                      <Ticket size={20} className="group-hover:scale-110 transition-transform" />
+                    {/* Ticket icon circle */}
+                    <div className="w-12 h-12 rounded-full bg-white/10 border border-white/15 flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-colors">
+                      <Ticket size={22} className="text-white" />
                     </div>
 
                     {/* Text block */}
-                    <div className="text-left">
-                      <p className="text-[9px] font-black uppercase tracking-[0.35em] text-white/50 group-hover:text-black/50 mb-1">Reserve Now</p>
-                      <p className="text-2xl font-display font-bold leading-none">${event.price.toLocaleString()}</p>
-                      <p className="text-[8px] font-medium text-white/40 group-hover:text-black/40 mt-1">per person</p>
+                    <div className="text-left min-w-[110px]">
+                      <p className="text-[9px] font-black uppercase tracking-[0.4em] text-white/40 mb-2">Reserve Now</p>
+                      <p className="text-3xl font-display font-bold leading-none text-white mb-1">
+                        ${event.price.toLocaleString()}
+                      </p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <p className="text-[10px] text-white/40 font-medium">per person</p>
+                        {event.spotsLeft <= 5 && (
+                          <span className="flex items-center gap-1 text-[9px] font-black text-red-400 uppercase tracking-wide">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse inline-block" />
+                            {event.spotsLeft} left
+                          </span>
+                        )}
+                      </div>
                     </div>
 
-                    {/* Urgency dot */}
-                    {event.spotsLeft <= 5 && (
-                      <div className="flex flex-col items-center gap-1">
-                        <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
-                        <span className="text-[7px] font-black uppercase text-red-400 leading-none">{event.spotsLeft}</span>
-                        <span className="text-[6px] text-red-400/60 uppercase leading-none">left</span>
-                      </div>
-                    )}
+                    {/* Arrow hint */}
+                    <ChevronRight size={16} className="text-white/20 group-hover:text-white/60 group-hover:-translate-x-1 transition-all shrink-0" />
                   </motion.button>
                 </motion.div>
               )}
