@@ -10,10 +10,10 @@ import { EVENTS, type LKPEvent, type EventAct } from '../data';
 
 // ─── Act type config ─────────────────────────────────────────────────────────
 const actCfg: Record<EventAct['type'], { icon: any; label: string; dot: string }> = {
-  performance: { icon: Music,    label: 'Performance', dot: 'bg-rose-400' },
-  ceremony:    { icon: Flame,    label: 'Ceremony',    dot: 'bg-amber-400' },
-  social:      { icon: Coffee,   label: 'Social',      dot: 'bg-sky-400' },
-  wellness:    { icon: Sparkles, label: 'Wellness',    dot: 'bg-emerald-400' },
+  performance: { icon: Music, label: 'Performance', dot: 'bg-rose-400' },
+  ceremony: { icon: Flame, label: 'Ceremony', dot: 'bg-amber-400' },
+  social: { icon: Coffee, label: 'Social', dot: 'bg-sky-400' },
+  wellness: { icon: Sparkles, label: 'Wellness', dot: 'bg-emerald-400' },
 };
 
 // ─── Booking Success ──────────────────────────────────────────────────────────
@@ -139,26 +139,24 @@ function Programme({ schedule }: { schedule: EventAct[] }) {
                   className="overflow-hidden"
                 >
                   <div className="pb-8 pl-[3.25rem] flex items-start gap-5">
-                    <div className={`p-3 rounded-2xl shrink-0 ${
-                      act.type === 'performance' ? 'bg-rose-500/10' :
-                      act.type === 'ceremony'    ? 'bg-amber-500/10' :
-                      act.type === 'social'      ? 'bg-sky-500/10' :
-                                                   'bg-emerald-500/10'
-                    }`}>
+                    <div className={`p-3 rounded-2xl shrink-0 ${act.type === 'performance' ? 'bg-rose-500/10' :
+                      act.type === 'ceremony' ? 'bg-amber-500/10' :
+                        act.type === 'social' ? 'bg-sky-500/10' :
+                          'bg-emerald-500/10'
+                      }`}>
                       <Icon size={18} className={
                         act.type === 'performance' ? 'text-rose-300' :
-                        act.type === 'ceremony'    ? 'text-amber-300' :
-                        act.type === 'social'      ? 'text-sky-300' :
-                                                     'text-emerald-300'
+                          act.type === 'ceremony' ? 'text-amber-300' :
+                            act.type === 'social' ? 'text-sky-300' :
+                              'text-emerald-300'
                       } />
                     </div>
                     <div>
-                      <span className={`text-[9px] font-black uppercase tracking-widest mb-2 block ${
-                        act.type === 'performance' ? 'text-rose-400' :
-                        act.type === 'ceremony'    ? 'text-amber-400' :
-                        act.type === 'social'      ? 'text-sky-400' :
-                                                     'text-emerald-400'
-                      }`}>{cfg.label}</span>
+                      <span className={`text-[9px] font-black uppercase tracking-widest mb-2 block ${act.type === 'performance' ? 'text-rose-400' :
+                        act.type === 'ceremony' ? 'text-amber-400' :
+                          act.type === 'social' ? 'text-sky-400' :
+                            'text-emerald-400'
+                        }`}>{cfg.label}</span>
                       <p className="text-white/50 leading-relaxed text-[15px] font-light max-w-xl">{act.desc}</p>
                     </div>
                   </div>
@@ -400,9 +398,9 @@ export default function EventDetail() {
               className="flex flex-wrap gap-6 text-white/40 text-xs"
             >
               {[
-                { Icon: MapPin,   val: event.location },
+                { Icon: MapPin, val: event.location },
                 { Icon: Calendar, val: event.date },
-                { Icon: Clock,    val: event.time },
+                { Icon: Clock, val: event.time },
               ].map(({ Icon, val }) => (
                 <div key={val} className="flex items-center gap-2">
                   <Icon size={12} className="shrink-0" />
@@ -650,11 +648,10 @@ export default function EventDetail() {
               </div>
 
               {/* Horizontal scroll on mobile, grid on desktop */}
-              <div className={`grid gap-6 ${
-                event.speakers.length === 1 ? 'grid-cols-1 max-w-md' :
+              <div className={`grid gap-6 ${event.speakers.length === 1 ? 'grid-cols-1 max-w-md' :
                 event.speakers.length === 2 ? 'grid-cols-1 md:grid-cols-2 max-w-2xl' :
-                'grid-cols-1 md:grid-cols-3'
-              }`}>
+                  'grid-cols-1 md:grid-cols-3'
+                }`}>
                 {event.speakers.map((spk, i) => (
                   <motion.div
                     key={spk.name}
