@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import ExperienceDetail from './pages/ExperienceDetail'
+import EventDetail from './pages/EventDetail'
 import Cursor from './components/Cursor'
 import { useEffect } from 'react'
 
@@ -24,6 +25,7 @@ function App() {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/experience/:id" element={<ExperienceDetail />} />
+          <Route path="/event/:id" element={<EventDetail />} />
         </Routes>
       </AnimatePresence>
 

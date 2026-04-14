@@ -139,15 +139,21 @@ export default function Navbar() {
               </motion.button>
             </div>
             <div className="flex flex-col gap-10 mt-20 px-4">
-              {['Experiences', 'Adventures', 'Stays', 'About'].map((item) => (
-                <div key={item} className="overflow-hidden">
-                  <motion.a 
+              {[
+                { label: 'Experiences', path: '/#experiences' },
+                { label: 'Events',      path: '/#events' },
+                { label: 'Food',        path: '/#food' },
+                { label: 'Stays',       path: '/#stays' },
+                { label: 'Places',      path: '/#places' },
+              ].map((item) => (
+                <div key={item.label} className="overflow-hidden">
+                  <motion.a
                     variants={linkVars}
-                    href="#" 
+                    href={item.path}
                     className="text-6xl font-display font-medium block hover:translate-x-4 transition-transform duration-300 hover:text-white/80"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {item}
+                    {item.label}
                   </motion.a>
                 </div>
               ))}

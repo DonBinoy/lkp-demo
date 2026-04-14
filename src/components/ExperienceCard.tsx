@@ -72,8 +72,10 @@ export default function ExperienceCard({
     y.set(0);
   };
 
+  const linkPath = type === 'event' ? `/event/${id}` : `/experience/${id}`;
+
   return (
-    <Link to={`/experience/${id}`} className="block relative" style={{ perspective: "1000px" }}>
+    <Link to={linkPath} className="block relative" style={{ perspective: "1000px" }}>
       <motion.div 
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
