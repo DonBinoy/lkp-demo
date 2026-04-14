@@ -2,11 +2,10 @@ import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, ShieldCheck, ChevronRight, 
-  MapPin, Clock, Star, Users, 
-  Coffee, Globe, Info, Calendar, Utensils
+  Users, Globe, Calendar, Utensils
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { EXPERIENCES, Experience } from '../data';
+import { EXPERIENCES, type Experience } from '../data';
 
 export default function ExperienceDetail() {
   const { id } = useParams();

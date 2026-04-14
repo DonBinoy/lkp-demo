@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Star, MapPin, Clock } from 'lucide-react';
-import { CategoryType } from '../data';
+import type { CategoryType } from '../data';
 
 interface ExperienceCardProps {
   id: number;
