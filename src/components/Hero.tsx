@@ -1,6 +1,6 @@
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 const SLIDES = [
   {
@@ -35,35 +35,50 @@ const SLIDES = [
 
 const Particles = ({ type }: { type: string }) => {
   const count = 30;
+  const particles = useMemo(() => {
+    return [...Array(count)].map((_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      scale: Math.random() * 2,
+      opacity: Math.random() * 0.5,
+      duration: 10 + Math.random() * 20,
+      width: Math.random() * 4,
+      height: Math.random() * 4,
+      animXStart: Math.random() * 100,
+      animXEnd: (Math.random() * 100 + 5)
+    }));
+  }, [count]);
+
   return (
     <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-      {[...Array(count)].map((_, i) => (
+      {particles.map((p: any) => (
         <motion.div
-          key={i}
+          key={p.id}
           className={`absolute rounded-full blur-[1px] ${
             type === 'snow' ? 'bg-white/40' : 
             type === 'fireflies' ? 'bg-green-300/30' : 
             'bg-white/10'
           }`}
           initial={{ 
-            x: Math.random() * 100 + "%", 
-            y: Math.random() * 100 + "%", 
-            scale: Math.random() * 2,
-            opacity: Math.random() * 0.5 
+            x: p.x + "%", 
+            y: p.y + "%", 
+            scale: p.scale,
+            opacity: p.opacity 
           }}
           animate={{ 
             y: ["0%", "100%"],
-            x: [Math.random() * 100 + "%", (Math.random() * 100 + 5) + "%"],
+            x: [p.animXStart + "%", p.animXEnd + "%"],
             opacity: [0, 0.5, 0]
           }}
           transition={{ 
-            duration: 10 + Math.random() * 20, 
+            duration: p.duration, 
             repeat: Infinity, 
             ease: "linear" 
           }}
           style={{ 
-            width: Math.random() * 4 + "px", 
-            height: Math.random() * 4 + "px" 
+            width: p.width + "px", 
+            height: p.height + "px" 
           }}
         />
       ))}

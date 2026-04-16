@@ -106,17 +106,35 @@ export default function EventDetailView() {
                 </div>
 
                 <div className="space-y-6 mb-12">
-                   <div className="flex justify-between items-center py-4 border-b border-white/5">
+                   <div className="flex justify-between items-center py-4 border-b border-white/5 relative group/input">
                       <span className="text-[10px] font-black uppercase tracking-widest text-white/40 flex items-center gap-3"><Calendar size={14} /> Date</span>
-                      <span className="text-xs md:text-sm font-display font-bold">Sept 22, 2026</span>
+                      <div className="relative flex items-center">
+                        <input 
+                          type="date"
+                          className="bg-transparent text-right text-xs md:text-sm font-display font-bold text-white focus:outline-none cursor-pointer hover:text-white/80 transition-colors [color-scheme:dark]" 
+                        />
+                      </div>
                    </div>
-                   <div className="flex justify-between items-center py-4 border-b border-white/5">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-white/40 flex items-center gap-3"><Users size={14} /> Capacity</span>
-                      <span className="text-xs md:text-sm font-display font-bold">12 Distinguished Guests</span>
+                   <div className="flex justify-between items-center py-4 border-b border-white/5 relative group/input">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-white/40 flex items-center gap-3"><Clock size={14} /> Time</span>
+                      <div className="relative flex items-center">
+                        <input 
+                          type="time"
+                          className="bg-transparent text-right text-xs md:text-sm font-display font-bold text-white focus:outline-none cursor-pointer hover:text-white/80 transition-colors [color-scheme:dark]" 
+                        />
+                      </div>
                    </div>
-                   <div className="flex justify-between items-center py-4 border-b border-white/5">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-white/40 flex items-center gap-3"><ShieldCheck size={14} /> Access</span>
-                      <span className="text-xs md:text-sm font-display font-bold">Private / Exclusive</span>
+                   <div className="flex justify-between items-center py-4 border-b border-white/5 relative group/input">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-white/40 flex items-center gap-3"><Users size={14} /> Guests</span>
+                      <div className="relative flex items-center">
+                        <input 
+                          type="number"
+                          min="1"
+                          max="20"
+                          defaultValue="2"
+                          className="bg-transparent text-right text-xs md:text-sm font-display font-bold text-white focus:outline-none cursor-pointer w-16 hover:text-white/80 transition-colors" 
+                        />
+                      </div>
                    </div>
                 </div>
 

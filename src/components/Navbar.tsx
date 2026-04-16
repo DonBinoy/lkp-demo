@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { Search, Menu, X, User, Globe } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const menuVars: any = {
+  const menuVars: Variants = {
     initial: { clipPath: "circle(0% at 100% 0)" },
     animate: { 
       clipPath: "circle(150% at 100% 0)", 
@@ -34,7 +34,7 @@ export default function Navbar() {
     }
   };
 
-  const linkVars: any = {
+  const linkVars: Variants = {
     initial: { opacity: 0, y: 50 },
     animate: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
   };

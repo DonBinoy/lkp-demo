@@ -15,7 +15,7 @@ export default function StayDetailView() {
     return <div className="min-h-screen bg-[#050505] flex items-center justify-center text-white/20 font-sans uppercase tracking-widest text-xs">Stay Unavailable</div>;
   }
 
-  const amenityIcons: any = {
+  const amenityIcons: Record<string, React.ReactNode> = {
     "Private Spa": <Wind size={20} />,
     "Butler Service": <ShieldCheck size={20} />,
     "Gourmet Kitchen": <Coffee size={20} />,
