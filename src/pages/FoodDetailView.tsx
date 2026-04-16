@@ -1,10 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Utensils, Award, GlassWater, Leaf, MapPin, ChevronDown, Users, Calendar } from 'lucide-react';
+import { ArrowLeft, Utensils, Award, Leaf, MapPin, ChevronDown, Users, Calendar } from 'lucide-react';
 import { EXPERIENCES } from '../data';
 import { useState } from 'react';
-import ImageGallery from '../components/ImageGallery';
-import HostCard from '../components/HostCard';
+
 
 export default function FoodDetailView() {
   const { id } = useParams();
