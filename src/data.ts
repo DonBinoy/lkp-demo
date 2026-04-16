@@ -31,6 +31,10 @@ export interface Experience {
     role: string;
     bio: string;
     avatar: string;
+    rating?: number;
+    reviewsCount?: number;
+    memberSince?: string;
+    website?: string;
   };
   locationDetails?: {
     address: string;
@@ -38,10 +42,77 @@ export interface Experience {
     nearbyPoints?: string[];
   };
   specs?: { label: string; value: string }[];
+  difficulty?: string;
+  groupSize?: string;
+  languages?: string[];
+  guestRequirements?: string;
+  meetingPoint?: string;
+  whatToBring?: string[];
+  rules?: string[];
+  cancellationPolicy?: string;
+  reviews_list?: { name: string; avatar: string; rating: number; date: string; comment: string }[];
+  addons?: { id: number; title: string; price: number; icon?: string }[];
 }
 
 export const EXPERIENCES: Experience[] = [
   // --- EXPERIENCES ---
+  {
+    id: 100,
+    title: "Hill Top Trekking",
+    location: "Idukki, Kerala",
+    price: 200,
+    duration: "3 hrs",
+    rating: 0.0,
+    reviews: 0,
+    image: "/assets/hill_top_trekking_kerala_hero_1776346177718.png",
+    detailImage: "/assets/hill_top_trekking_gallery_1_1776346242181.png",
+    gallery: [
+      "/assets/hill_top_trekking_kerala_hero_1776346177718.png",
+      "/assets/hill_top_trekking_gallery_1_1776346242181.png",
+      "/assets/hill_top_trekking_gallery_2_1776346273926.png",
+      "https://images.unsplash.com/photo-1544735032-6a51d75a1bd0?auto=format&fit=crop&q=80&w=2000",
+      "https://images.unsplash.com/photo-1506461883276-594a12b11cf3?auto=format&fit=crop&q=80&w=2000"
+    ],
+    category: "Adventure",
+    type: 'experience',
+    description: "Panoramic views and thrilling adventures in the heart of Kerala's majestic mountains.",
+    longDescription: "Hill top trekking offers panoramic views and thrilling adventures, with top spots including the scenic Munnar hills and challenging Agasthyarkoodam Peak in Kerala. Popular, high-altitude treks include Har ki Dun (Uttarakhand), Tarsar Marsar (Kashmir), and various trails in Himachal Pradesh, providing diverse experiences from beginner to expert levels.",
+    highlights: ["Panoramic Munnar Views", "Agasthyarkoodam Peak", "Western Ghats Ridge", "Mist-covered trails"],
+    difficulty: "Moderate",
+    groupSize: "1+",
+    languages: ["English", "Malayalam", "Hindi"],
+    guestRequirements: "test experience: test questions",
+    meetingPoint: "Idukki, Kerala, India",
+    whatToBring: ["Trekking Boots", "Water Bottle", "Raincoat", "Camera", "Sunscreen"],
+    rules: ["No littering", "Follow the guide", "Stay on designated paths", "Respect local wildlife"],
+    cancellationPolicy: "Full refund if cancelled 24 hours before the experience start time.",
+    host: {
+      name: "Bijo K Binoy",
+      role: "Expert Mountain Guide",
+      bio: "Born and raised in the rolling hills of Idukki, Bijo has been leading treks for over 10 years, specializing in hidden trails and biodiversity.",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200",
+      rating: 0.0,
+      reviewsCount: 0,
+      memberSince: "Mar 15, 2021",
+      website: "https://ui8.net"
+    },
+    locationDetails: {
+      address: "Idukki, Kerala, India",
+      coordinates: { lat: 9.85, lng: 76.96 }
+    },
+    specs: [
+      { label: "Max Altitude", value: "1,600m" },
+      { label: "Trail Type", value: "Ridge" },
+      { label: "Best Time", value: "Oct - Mar" }
+    ],
+    addons: [
+      { id: 1, title: "4K V-Camera Gear", price: 120, icon: "Camera" },
+      { id: 2, title: "Gourmet Trek Snacks", price: 45, icon: "Utensils" },
+      { id: 3, title: "Personal Drone Pilot", price: 250, icon: "Video" },
+      { id: 4, title: "Pro Trekking Porter", price: 150, icon: "Backpack" }
+    ],
+    reviews_list: []
+  },
   {
     id: 1,
     title: "Starlit Sanctuary Expedition",
