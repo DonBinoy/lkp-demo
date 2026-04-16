@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { ArrowRight, MapPin } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 const SLIDES = [

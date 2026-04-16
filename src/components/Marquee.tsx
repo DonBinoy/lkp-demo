@@ -28,7 +28,7 @@ function MarqueeItem({ children, baseVelocity = 100 }: MarqueeItemProps) {
   const [isHovered, setIsHovered] = useState(false);
   const directionFactor = useRef<number>(1);
 
-  useAnimationFrame((t, delta) => {
+  useAnimationFrame((_, delta) => {
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
     if (isHovered) {

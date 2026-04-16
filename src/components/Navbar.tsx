@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Menu, X, User, Globe } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,23 +73,33 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-10">
             {[
-              { label: 'Experiences', path: '/#experiences' },
-              { label: 'Events', path: '/#events' },
-              { label: 'Food', path: '/#food' },
-              { label: 'Stays', path: '/#stays' },
-              { label: 'Places', path: '/#places' }
+              { label: 'Experiences', path: '/?filter=experience#catalog' },
+              { label: 'Events', path: '/?filter=event#catalog' },
+              { label: 'Food', path: '/?filter=food#catalog' },
+              { label: 'Stays', path: '/?filter=stay#catalog' },
+              { label: 'Places', path: '/?filter=place#catalog' }
             ].map((item, idx) => (
-              <motion.a
+              <motion.div
                 key={item.label}
-                href={item.path}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 + idx * 0.1 }}
-                className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/50 hover:text-white transition-all relative group"
               >
-                {item.label}
-                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-1 rounded-full bg-white transition-all duration-500 group-hover:w-full" />
-              </motion.a>
+                <div
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(item.path);
+                    setTimeout(() => {
+                      const el = document.getElementById('catalog');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }}
+                  className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/50 hover:text-white transition-all relative group cursor-pointer"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-1 rounded-full bg-white transition-all duration-500 group-hover:w-full" />
+                </div>
+              </motion.div>
             ))}
           </div>
 
@@ -139,16 +150,29 @@ export default function Navbar() {
               </motion.button>
             </div>
             <div className="flex flex-col gap-10 mt-20 px-4">
-              {['Experiences', 'Adventures', 'Stays', 'About'].map((item) => (
-                <div key={item} className="overflow-hidden">
-                  <motion.a 
-                    variants={linkVars}
-                    href="#" 
-                    className="text-6xl font-display font-medium block hover:translate-x-4 transition-transform duration-300 hover:text-white/80"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item}
-                  </motion.a>
+              {[
+                { label: 'Experiences', path: '/?filter=experience#catalog' },
+                { label: 'Events', path: '/?filter=event#catalog' },
+                { label: 'Food', path: '/?filter=food#catalog' },
+                { label: 'Stays', path: '/?filter=stay#catalog' },
+                { label: 'Places', path: '/?filter=place#catalog' }
+              ].map((item) => (
+                <div key={item.label} className="overflow-hidden">
+                  <motion.div variants={linkVars}>
+                    <div 
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        navigate(item.path);
+                        setTimeout(() => {
+                          const el = document.getElementById('catalog');
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }, 100);
+                      }}
+                      className="text-6xl font-display font-medium block hover:translate-x-4 transition-transform duration-300 hover:text-white/80 cursor-pointer"
+                    >
+                      {item.label}
+                    </div>
+                  </motion.div>
                 </div>
               ))}
             </div>
