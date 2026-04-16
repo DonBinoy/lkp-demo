@@ -21,7 +21,7 @@ export default function FeaturedGrid() {
   }, [location.search]);
 
   const filteredAndSortedItems = useMemo(() => {
-    let items = filter === 'all' 
+    const items = filter === 'all' 
       ? [...EXPERIENCES] 
       : EXPERIENCES.filter(item => item.type === filter);
 

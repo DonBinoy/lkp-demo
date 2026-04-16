@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Plus, Minus, ChevronRight, Activity, ShieldCheck } from 'lucide-react';
 import { EXPERIENCES } from '../data';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import ImageGallery from '../components/ImageGallery';
 import HostCard from '../components/HostCard';
 
@@ -12,7 +12,7 @@ export default function ExperienceDetail() {
   const experience = EXPERIENCES.find(e => e.id === Number(id));
   const [guests, setGuests] = useState(1);
   const [isBooked, setIsBooked] = useState(false);
-  const bookingId = useMemo(() => `LKP-${(Math.random() * 10000).toFixed(0)}`, []);
+  const [bookingId] = useState(() => `LKP-${(Math.random() * 10000).toFixed(0)}`);
 
   if (!experience || experience.type !== 'experience') {
     return (
