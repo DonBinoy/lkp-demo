@@ -1,18 +1,16 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Info, ShieldCheck, Accessibility, Briefcase, AlertCircle, 
-  Minus, ChevronRight, Play, ChevronLeft, Compass, MapPin, Activity, Globe, Map
+  Info, ShieldCheck, Briefcase, AlertCircle, 
+  Minus, ChevronRight, Play, ChevronLeft, Compass, Globe, Map
 } from 'lucide-react';
 import { EXPERIENCES } from '../data';
 import { useState, useEffect } from 'react';
 
 export default function PlaceDetail() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const place = EXPERIENCES.find(e => e.id === Number(id));
   const [visitorToggle, setVisitorToggle] = useState(false);
-  const [connectivityToggle, setConnectivityToggle] = useState(true);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
