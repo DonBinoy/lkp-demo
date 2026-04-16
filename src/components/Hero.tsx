@@ -1,6 +1,6 @@
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const SLIDES = [
   {
@@ -33,9 +33,22 @@ const SLIDES = [
   }
 ];
 
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  scale: number;
+  opacity: number;
+  duration: number;
+  width: number;
+  height: number;
+  animXStart: number;
+  animXEnd: number;
+}
+
 const Particles = ({ type }: { type: string }) => {
   const count = 30;
-  const particles = useMemo(() => {
+  const [particles] = useState<Particle[]>(() => {
     return [...Array(count)].map((_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -48,11 +61,11 @@ const Particles = ({ type }: { type: string }) => {
       animXStart: Math.random() * 100,
       animXEnd: (Math.random() * 100 + 5)
     }));
-  }, [count]);
+  });
 
   return (
     <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-      {particles.map((p: any) => (
+      {particles.map((p: Particle) => (
         <motion.div
           key={p.id}
           className={`absolute rounded-full blur-[1px] ${

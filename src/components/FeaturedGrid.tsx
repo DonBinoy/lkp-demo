@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ExperienceCard from './ExperienceCard';
 import { EXPERIENCES } from '../data';
@@ -9,9 +10,23 @@ type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'rating';
 export default function FeaturedGrid() {
   const [filter, setFilter] = useState('all');
   const [sort, setSort] = useState<SortOption>('featured');
+  const location = useLocation();
+
+  useEffect(() => {
+    const hash = location.hash.replace('#', '');
+    const validCategories = ['experience', 'stay', 'event', 'food', 'place'];
+    
+    if (validCategories.includes(hash)) {
+      setFilter(hash);
+      const element = document.getElementById('catalog');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location.hash]);
 
   const filteredAndSortedItems = useMemo(() => {
-    let items = filter === 'all' 
+    const items = filter === 'all' 
       ? [...EXPERIENCES] 
       : EXPERIENCES.filter(item => item.type === filter);
 
