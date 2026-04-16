@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, Users, Ticket, Activity, Clock } from 'lucide-react';
+import { ArrowLeft, Users, Ticket, Activity, Clock } from 'lucide-react';
 import { EXPERIENCES } from '../data';
 import { useState } from 'react';
 import ImageGallery from '../components/ImageGallery';

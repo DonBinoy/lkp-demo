@@ -310,6 +310,7 @@ export const EXPERIENCES: Experience[] = [
     category: "Education",
     type: 'food',
     description: "Learn the art of mountain foraging with local monks.",
+    highlights: ["Mountain foraging", "Monk interaction", "Vegan cuisine"],
     host: {
       name: "Sensei Hiro",
       role: "Forest Guardian",
